@@ -1,7 +1,16 @@
-import React from "react";
-import { render } from "react-dom";
-import "./index.css";
-import App from "./Components/App/App";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/core/styles';
+import App from './Components/App/App';
+import theme from './theme';
 
-const root = document.getElementById("root");
-render(<App />, root);
+ReactDOM.render(
+  <ThemeProvider theme={theme}>
+    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+    <CssBaseline />
+    <App />
+  </ThemeProvider>,
+  document.getElementById('root'),
+);
