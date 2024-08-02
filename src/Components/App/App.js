@@ -1,16 +1,22 @@
 import './App.css';
 import Login from '../Login';
 import { useState } from 'react';
+import { ThemeProvider } from '@material-ui/core';
+import defaultTheme from '../../theme.js'
 
-
-function App() {
+export default function Component() {
   const [authenticated, setAuthenticated] = useState(false)
 
-  return (
-    <div className="App">
-       {!authenticated && <Login onAuthenticate={() => setAuthenticated(true)}/>}
-    </div>
-  );
-}
+  const onLogin = ({email, password}) => {
+    console.log("onAuthenticate ", email, password)
+    setAuthenticated(true);
+  };
 
-export default App;
+  return (
+    <ThemeProvider theme={defaultTheme}>
+    <div className="App">
+       {!authenticated && <Login onLogin={onLogin}/>}
+    </div>
+    </ThemeProvider>
+  );
+};

@@ -1,14 +1,23 @@
+import './style.css';
+import { Button, Dialog, DialogActions, DialogContent, FormControl, TextField } from '@material-ui/core';
+import { Check } from '@material-ui/icons';
+import { useState } from 'react';
 
-import { Button, Dialog, DialogActions, DialogTitle} from '@material-ui/core';
+export default function Component({ onLogin }) {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
-export default function Login({onAuthenticate}) {
     return (
         <Dialog open={true}>
-            <DialogTitle>{"Login"}</DialogTitle>
-
+            <DialogContent>
+                <FormControl>
+                    <TextField label="Email" onChange={(e) => setEmail(e.target.value)} autoFocus />
+                    <TextField label="Password" type="password" onChange={(e) => setPassword(e.target.value)} />
+                </FormControl>
+            </DialogContent>
             <DialogActions>
-                <Button onClick={onAuthenticate} autoFocus>
-                    Authenticate
+                <Button startIcon={<Check />} onClick={() => onLogin({ email: email, password: password })}>
+                    Login
                 </Button>
             </DialogActions>
         </Dialog>
