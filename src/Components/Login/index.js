@@ -1,6 +1,6 @@
 import './style.css';
 import { Button, Dialog, DialogActions, DialogContent, FormControl, TextField } from '@material-ui/core';
-import { Check } from '@material-ui/icons';
+import { Check, LockOpen } from '@material-ui/icons';
 import { useState } from 'react';
 
 export default function Component({ onLogin }) {
@@ -11,6 +11,7 @@ export default function Component({ onLogin }) {
         <Dialog open={true}>
             <DialogContent>
                 <FormControl>
+                    <LockOpen className="big-icon" />
                     <TextField label="Email" onChange={(e) => setEmail(e.target.value)} autoFocus />
                     <TextField label="Password" type="password" onChange={(e) => setPassword(e.target.value)} />
                 </FormControl>

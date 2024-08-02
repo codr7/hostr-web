@@ -1,4 +1,5 @@
 import './style.css';
+import Home from '../Home';
 import Login from '../Login';
 import { useState } from 'react';
 import { ThemeProvider } from '@material-ui/core';
@@ -16,6 +17,7 @@ export default function Component() {
     <ThemeProvider theme={defaultTheme}>
     <div className="App">
        {!authenticated && <Login onLogin={onLogin}/>}
+       {authenticated && <Home/>}
     </div>
     </ThemeProvider>
   );
