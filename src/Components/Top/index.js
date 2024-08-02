@@ -1,5 +1,5 @@
 //import './style.css';
-import { AppBar, IconButton, Toolbar} from '@mui/material';
+import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import { Menu } from '@mui/icons-material';
 
 export default function Component({ label }) {
@@ -7,9 +7,16 @@ export default function Component({ label }) {
         <AppBar position="static">
             <Toolbar variant="dense">
                 <IconButton edge="start">
-                    <Menu/>
+                    <Menu />
                 </IconButton>
-                {label}
+                <Typography
+                    variant="button"
+                    color="common.white"
+                    noWrap
+                    component="div"
+                    sx={{ display: { xs: 'none', sm: 'block' } }}>
+                    {label}
+                </Typography>
             </Toolbar>
         </AppBar>
     );
