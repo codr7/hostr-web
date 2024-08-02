@@ -1,6 +1,6 @@
 import './style.css';
-import { Button, Dialog, DialogActions, DialogContent, FormControl, TextField } from '@material-ui/core';
-import { Check, LockOpen } from '@material-ui/icons';
+import { Button, Dialog, DialogActions, DialogContent, FormControl, TextField } from '@mui/material';
+import { Check, LockOpen } from '@mui/icons-material';
 import { useState } from 'react';
 
 export default function Component({ onLogin }) {

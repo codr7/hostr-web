@@ -1,6 +1,6 @@
 //import './style.css';
-import { AppBar, IconButton, Toolbar} from '@material-ui/core';
-import { Menu } from '@material-ui/icons';
+import { AppBar, IconButton, Toolbar} from '@mui/material';
+import { Menu } from '@mui/icons-material';
 
 export default function Component({ label }) {
     return (

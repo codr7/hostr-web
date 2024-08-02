@@ -2,7 +2,7 @@ import './style.css';
 import Home from '../Home';
 import Login from '../Login';
 import { useState } from 'react';
-import { ThemeProvider } from '@material-ui/core';
+import { ThemeProvider } from '@mui/material';
 import defaultTheme from '../../theme.js'
 
 export default function Component() {
