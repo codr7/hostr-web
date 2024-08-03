@@ -16,8 +16,12 @@ export default function Component(  ) {
         console.log(`${AppConfig.apiPath}/login`);
 
         await 
-          fetch(`${AppConfig.apiPath}/login`, {method: 'POST', mode: 'cors', headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, body: JSON.stringify({email: email, password: password,})})
-          .then((res) => {setAppCx(res.json().token);});
+          fetch(`${AppConfig.apiPath}/login`, 
+            {method: 'POST', 
+             mode: 'cors', 
+             headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, 
+             body: JSON.stringify({email: email, password: password,})})
+            .then((res) => setAppCx(res.json().token));
 
         setAppCx({...appCx, jwtToken: 'abc'});
         navigate('/home', {replace: true});

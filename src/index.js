@@ -10,6 +10,7 @@ import defaultTheme from './theme.js'
 
 import ErrorPage from "./error-page";
 
+import Events from './Components/Events';
 import Home from './Components/Home';
 import Login from './Components/Login';
 import Root from './Components/Root';
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Login />,
+      },
+      {
+        path: '/events',
+        element: <Events />,
       },
       {
         path: '/home',

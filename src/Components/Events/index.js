@@ -1,16 +1,9 @@
 //import './style.css';
-import { useContext, useEffect } from 'react';
-import { AppContext } from '../../app.js';
-import {useNavigate} from 'react-router-dom';
+import { useAuth } from '../../app.js';
 
 export default function Component() {
-    const { appCx, setAppCx } = useContext(AppContext);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (!appCx.jwtToken) { navigate('/login', { replace: true }); }
-    });
-
+    useAuth();
+    
     return (
         <div></div>
     );
