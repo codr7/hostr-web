@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 export default function Component() {
     return (
         <div>
-            <Top label="?" />
+            <Top/>
             <Outlet />
         </div>
     );

@@ -5,18 +5,4 @@
 ** add to menu
 ** from-to date
 
-
-nav link
-
-<NavLink
-  style={({ isActive, isPending }) => {
-    return {
-      color: isActive ? "red" : "inherit",
-    };
-  }}
-  className={({ isActive, isPending }) => {
-    return isActive ? "active" : isPending ? "pending" : "";
-  }}
-/>
-
 npm run build
