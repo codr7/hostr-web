@@ -1,9 +1,10 @@
 import './style.css';
+//import http from 'http';
 import { Button, Dialog, DialogActions, DialogContent, FormControl, Stack, TextField } from '@mui/material';
 import { Login } from '@mui/icons-material';
 import { useContext, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { AppContext } from '../../app.js';
+import { AppConfig, AppContext } from '../../app.js';
 
 export default function Component(  ) {
     const [email, setEmail] = useState("")
@@ -11,7 +12,13 @@ export default function Component(  ) {
     const navigate = useNavigate();
     const {appCx, setAppCx} = useContext(AppContext);
     
-    const onLogin = () => {
+    const onLogin = async () => { 
+        console.log(`${AppConfig.apiPath}/login`);
+
+        await 
+          fetch(`${AppConfig.apiPath}/login`, {method: 'POST', mode: 'cors', headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, body: JSON.stringify({email: email, password: password,})})
+          .then((res) => {setAppCx(res.json().token);});
+
         setAppCx({...appCx, jwtToken: 'abc'});
         navigate('/home', {replace: true});
     };

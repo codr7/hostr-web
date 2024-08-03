@@ -1,5 +1,3 @@
-* send login request and set jwt token
-
 * add Top menu
 
 * add Events
@@ -8,7 +6,7 @@
 
 * add Events table
 
-* add breadcrumbs
+* add breadcrumbs to Top
 https://reactrouter.com/en/main/hooks/use-matches
 
 npm run build
