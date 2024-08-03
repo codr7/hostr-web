@@ -1,15 +1,18 @@
 import './style.css';
 import { Button, Dialog, DialogActions, DialogContent, FormControl, Stack, TextField } from '@mui/material';
 import { Login } from '@mui/icons-material';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { AppCx } from '../../app.js';
 
 export default function Component(  ) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate();
-
+    const {appCx, setAppCx} = useContext(AppCx);
+    
     const onLogin = () => {
+        setAppCx({'jwt-token': 'abc'});
         navigate('/home', {replace: true});
     };
 

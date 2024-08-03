@@ -4,7 +4,7 @@ import { AppCx } from '../../app.js';
 import {useNavigate} from 'react-router-dom';
 
 export default function Component() {
-    const { appCx } = useContext(AppCx);
+    const { appCx, setAppCx } = useContext(AppCx);
     const navigate = useNavigate();
 
     useEffect(() => {

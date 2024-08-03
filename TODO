@@ -1,8 +1,12 @@
 * add server address setting
 ** add server address setting
+
 * add Top menu
+
 * add Events
 ** add to menu
 ** from-to date
+
+* add Events table
 
 npm run build
