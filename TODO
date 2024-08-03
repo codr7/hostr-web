@@ -1,10 +1,6 @@
-* add Top menu
+* test events
 
-* add Events
-** add to menu
-** from-to date
-
-* add Events table
+* implement Top menu
 
 * add breadcrumbs to Top
 https://reactrouter.com/en/main/hooks/use-matches
