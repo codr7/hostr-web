@@ -6,7 +6,7 @@ function NL({ path, icon, caption }) {
     return (<NavLink
         to={path}
         className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""}
-        style={{ marginLeft: 10 }}>
+        style={{ marginLeft: 10, color: 'white', fontWeight: 'bold', textTransform: 'uppercase'}}>
         {caption}
     </NavLink>)
 }
