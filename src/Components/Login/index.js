@@ -3,16 +3,16 @@ import { Button, Dialog, DialogActions, DialogContent, FormControl, Stack, TextF
 import { Login } from '@mui/icons-material';
 import { useContext, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { AppCx } from '../../app.js';
+import { AppContext } from '../../app.js';
 
 export default function Component(  ) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate();
-    const {appCx, setAppCx} = useContext(AppCx);
+    const {appCx, setAppCx} = useContext(AppContext);
     
     const onLogin = () => {
-        setAppCx({'jwt-token': 'abc'});
+        setAppCx({...appCx, jwtToken: 'abc'});
         navigate('/home', {replace: true});
     };
 

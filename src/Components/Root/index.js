@@ -1,17 +1,17 @@
 import Top from '../Top';
 import { Outlet } from "react-router-dom";
 import { useState } from 'react';
-import { AppCx } from '../../app.js';
+import { AppContext } from '../../app.js';
 
 export default function Component() {
     const [appCx, setAppCx] = useState({});
 
     return (
         <div>
-            <AppCx.Provider value={{appCx: appCx, setAppCx: setAppCx}}>
-                {appCx['jwt-token'] && <Top />}
+            <AppContext.Provider value={{appCx: appCx, setAppCx: setAppCx}}>
+                {appCx.jwtToken && <Top />}
                 <Outlet />
-            </AppCx.Provider>
+            </AppContext.Provider>
         </div>
     );
 }
