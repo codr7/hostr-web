@@ -10,3 +10,19 @@
 https://reactrouter.com/en/main/hooks/use-matches
 
 npm run build
+
+                <Typography
+                    variant="button"
+                    color="common.white"
+                    noWrap
+                    component="div"
+                    sx={{ display: { xs: 'none', sm: 'block' } }}>
+                    Hostr v1.0
+                </Typography>
+
+                    const location = useLocation();
+    const path = new RegExp('/(.*)$').exec(location.pathname)[1];
+
+                <IconButton edge="start" onClick={() => navigate('/events')}>
+                    <House />
+                </IconButton>

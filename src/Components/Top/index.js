@@ -1,11 +1,17 @@
-//import './style.css';
-import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
-import { Menu } from '@mui/icons-material';
-import {useLocation} from 'react-router-dom';
+import { AppBar, IconButton, Toolbar } from '@mui/material';
+import { House, Menu } from '@mui/icons-material';
+import { NavLink } from 'react-router-dom';
+
+function NL({ path, icon, caption }) {
+    return (<NavLink
+        to={path}
+        className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""}
+        style={{ marginLeft: 10 }}>
+        {caption}
+    </NavLink>)
+}
 
 export default function Component() {
-    const location = useLocation();
-    const path = new RegExp('/(.*)$').exec(location.pathname)[1];
 
     return (
         <AppBar position="static">
@@ -13,14 +19,9 @@ export default function Component() {
                 <IconButton edge="start">
                     <Menu />
                 </IconButton>
-                <Typography
-                    variant="button"
-                    color="common.white"
-                    noWrap
-                    component="div"
-                    sx={{ display: { xs: 'none', sm: 'block' } }}>
-                    {path}
-                </Typography>
+
+                <NL path="/home" icon={House} caption="Home" />
+                <NL path="/events" icon={House} caption="Events" />
             </Toolbar>
         </AppBar>
     );
