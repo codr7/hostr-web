@@ -5,20 +5,26 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material';
+import defaultTheme from './theme.js'
+
+import ErrorPage from "./error-page";
 
 import Home from './Components/Home';
 import Login from './Components/Login';
-import { ThemeProvider } from '@mui/material';
-import defaultTheme from './theme.js'
+import Root from './Components/Root';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Login />,
-  },
-  {
-    path: '/home',
-    element: <Home />,
+    element: <Root />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: '/home',
+        element: <Home />,
+      },
+    ]
   },
   {
     path: '/login',
