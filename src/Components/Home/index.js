@@ -3,6 +3,6 @@ import Top from '../Top';
 
 export default function Component() {
     return (
-        <Top label="home"/>
+        <Top label="home" />
     );
 }

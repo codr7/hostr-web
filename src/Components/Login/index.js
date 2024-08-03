@@ -2,10 +2,16 @@ import './style.css';
 import { Button, Dialog, DialogActions, DialogContent, FormControl, Stack, TextField } from '@mui/material';
 import { Login } from '@mui/icons-material';
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
-export default function Component({ onLogin }) {
+export default function Component(  ) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const navigate = useNavigate();
+
+    const onLogin = () => {
+        navigate('/home', {replace: true});
+    };
 
     return (
         <Dialog open={true}>
@@ -18,7 +24,7 @@ export default function Component({ onLogin }) {
                 </FormControl>
             </DialogContent>
             <DialogActions>
-                <Button startIcon={<Login />} onClick={() => onLogin({ email: email, password: password })}>
+                <Button startIcon={<Login />} onClick={onLogin}>
                     Login
                 </Button>
             </DialogActions>
