@@ -76,9 +76,9 @@ export default function Component() {
                 <Button style={{ verticalAlign: 'bottom' }} onClick={onSearch} disabled={isSearching || pageSize === ""}><Search /></Button>
             </div>
             <div>
-                {(data.length > 0) && <div style={{ marginLeft: 'auto', marginRight: 'auto', width: 200 }}>
+                {(data.length > 0) && <div style={{ marginLeft: 'auto', marginRight: 'auto', width: 300 }}>
                     <Button style={{ verticalAlign: 'bottom' }} onClick={onPrev} disabled={isSearching || !hasPrev}><SkipPrevious /></Button>
-                    <span>{resultStart} to {resultEnd}</span>
+                    <span>page {pageIndex + 1} | record {resultStart} to {resultEnd}</span>
                     <Button style={{ verticalAlign: 'bottom' }} onClick={onNext} disabled={isSearching || !hasNext}><SkipNext /></Button>
                 </div>}
 
