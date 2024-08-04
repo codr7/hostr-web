@@ -68,7 +68,7 @@ export default function Component() {
     return (
         <Stack>
             <div style={{ marginLeft: 20, marginTop: 20 }}>
-                <TextField style={{ width: 100 }} label="Page Size" value={pageSize} onChange={(e) => {
+                <TextField style={{ width: 100 }} label="Page size" value={pageSize} onChange={(e) => {
                     const v = parseInt(e.target.value);
                     setPageSize(v ? v : "");
                     setIsSearching(false);
