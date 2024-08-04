@@ -10,6 +10,8 @@ export default function Component() {
     const [pageSize, setPageSize] = useState(20);
     const [data, setData] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
+    const [hasPrev, setHasPrev] = useState();
+    const [hasNext, setHasNext] = useState();
 
     const [resultStart, setResultStart] = useState();
     const [resultEnd, setResultEnd] = useState();
@@ -24,8 +26,10 @@ export default function Component() {
         fontSize: '100%'
     };
 
-    const refresh = async () => {
+    const refresh = async (pageIndex, pageSize) => {
         setIsSearching(true);
+        setResultStart(pageSize * pageIndex);
+        setResultEnd(pageSize * (pageIndex + 1));
 
         try {
             const d = await (
@@ -33,27 +37,30 @@ export default function Component() {
                     { mode: 'cors', headers: { 'Accept': 'application/json' } })
             ).json();
 
-            setResultStart(pageSize * pageIndex);
-            setResultEnd(pageSize * pageIndex + d.length);
             setData(d);
+            setHasNext(d.length >= pageSize);
         } finally {
             setIsSearching(false);
         }
     };
 
-    const onSearch = () => {
+    const onSearch = async () => {
         setPageIndex(0);
-        refresh();
+        await refresh(0, pageSize);
     };
 
-    const onNext = () => {
-        setPageIndex(pageIndex + 1);
-        refresh();
+    const onNext = async () => {
+        const i = pageIndex + 1;
+        await refresh(i, pageSize);
+        setPageIndex(i);
+        setHasPrev(true);
     };
 
-    const onPrev = () => {
-        setPageIndex(pageIndex - 1);
-        refresh();
+    const onPrev = async () => {
+        const i = pageIndex - 1;
+        await refresh(i, pageSize);
+        setPageIndex(i);
+        setHasPrev(i > 0);
     };
 
     return (
@@ -68,9 +75,9 @@ export default function Component() {
             </div>
             <div>
                 {(data.length > 0) && <div style={{ marginLeft: 'auto', marginRight: 'auto', width: 200 }}>
-                    <Button style={{ verticalAlign: 'bottom' }} onClick={onPrev} disabled={isSearching}><SkipPrevious /></Button>
+                    <Button style={{ verticalAlign: 'bottom' }} onClick={onPrev} disabled={isSearching || !hasPrev}><SkipPrevious /></Button>
                     <span>{resultStart} to {resultEnd}</span>
-                    <Button style={{ verticalAlign: 'bottom' }} onClick={onNext} disabled={isSearching}><SkipNext /></Button>
+                    <Button style={{ verticalAlign: 'bottom' }} onClick={onNext} disabled={isSearching || !hasNext}><SkipNext /></Button>
                 </div>}
 
                 <Table>

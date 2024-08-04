@@ -1,6 +1,19 @@
-* implement Top menu
+import { Paragliding } from "@mui/icons-material"
+
+* add Availability
+** copy events
+** remove paging
+
+* add Pools
+
+---
+
+* implement Top menu?
+
 * add breadcrumbs?
 https://reactrouter.com/en/main/hooks/use-matches
+
+---
 
 npm run build
 
