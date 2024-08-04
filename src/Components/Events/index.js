@@ -89,6 +89,8 @@ export default function Component() {
                 }}>
                     <TableHead>
                         <TableRow>
+                            <TableCell style={headerStyle}>Id</TableCell>
+                            <TableCell style={headerStyle}>Parent id</TableCell>
                             <TableCell style={headerStyle} width="130">Posted</TableCell>
                             <TableCell style={headerStyle}>Type</TableCell>
                             <TableCell style={headerStyle} width="200">Key</TableCell>
@@ -98,6 +100,8 @@ export default function Component() {
                     <TableBody>
                         {data.map((ev, i) => {
                             return (<TableRow>
+                                <TableCell style={dataStyle}>{ev.id}</TableCell>
+                                <TableCell style={dataStyle}>{ev.parentId}</TableCell>
                                 <TableCell style={dataStyle}>{formatDateTime(new Date(ev.postedAt))}</TableCell>
                                 <TableCell style={dataStyle}>{ev.type}</TableCell>
                                 <TableCell style={dataStyle}>{ev.key && JSON.stringify(ev.key, null, 2)}</TableCell>
