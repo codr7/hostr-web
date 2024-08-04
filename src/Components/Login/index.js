@@ -13,15 +13,14 @@ export default function Component(  ) {
     const onLogin = async () => { 
         console.log(`${AppConfig.apiPath}/login`);
 
-        await 
+        var res = await (await 
           fetch(`${AppConfig.apiPath}/login`, 
             {method: 'POST', 
              mode: 'cors', 
              headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, 
-             body: JSON.stringify({email: email, password: password,})})
-            .then((res) => setAppCx(res.json().token));
-
-        setAppCx({...appCx, jwtToken: 'abc'});
+             body: JSON.stringify({email: email, password: password,})})).json();
+            
+        setAppCx({...appCx, jwtToken: res.token});
         navigate('/home', {replace: true});
     };
 

@@ -1,9 +1,9 @@
 import './style.css';
-import { AppConfig, formatDateTime, useAuth } from '../../app.js';
+import { AppConfig, AppContext, formatDateTime, useAuth } from '../../app.js';
 import { Button, Stack, Table, TableBody, TableHead, TableRow, TextField } from '@mui/material';
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { Search, SkipNext, SkipPrevious } from '@mui/icons-material';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 export default function Component() {
     useAuth();
@@ -28,6 +28,8 @@ export default function Component() {
         fontSize: '100%'
     };
 
+    const { appCx } = useContext(AppContext);
+
     const refresh = async (pageIndex, pageSize) => {
         setIsSearching(true);
         setResultStart(pageSize * pageIndex);
@@ -36,7 +38,7 @@ export default function Component() {
         try {
             const d = await (
                 await fetch(`${AppConfig.apiPath}/events?rowOffset=${pageIndex * pageSize}&rowLimit=${pageSize}`,
-                    { mode: 'cors', headers: { 'Accept': 'application/json' } })
+                    { mode: 'cors', headers: { 'Accept': 'application/json', Authorization: `Bearer ${appCx.jwtToken}` } })
             ).json();
 
             setData(d);

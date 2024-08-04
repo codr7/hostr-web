@@ -1,3 +1,6 @@
+* show 10 last events in static grid on home screen
+** click on label to go to events screen
+
 * add Availability
 ** copy events
 ** remove paging
