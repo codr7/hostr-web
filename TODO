@@ -1,5 +1,3 @@
-import { Paragliding } from "@mui/icons-material"
-
 * add Availability
 ** copy events
 ** remove paging
@@ -8,10 +6,10 @@ import { Paragliding } from "@mui/icons-material"
 
 ---
 
-* implement Top menu?
+* fix nav link styling
+** highlight active
 
-* add breadcrumbs?
-https://reactrouter.com/en/main/hooks/use-matches
+* implement Top menu
 
 ---
 
