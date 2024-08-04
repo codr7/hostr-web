@@ -1,5 +1,7 @@
+import './style.css';
 import { AppConfig, formatDateTime, useAuth } from '../../app.js';
-import { Button, Stack, Table, TableBody, TableCell, TableHead, TableRow, TextField } from '@mui/material';
+import { Button, Stack, Table, TableBody, TableHead, TableRow, TextField } from '@mui/material';
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { Search, SkipNext, SkipPrevious } from '@mui/icons-material';
 import { useState } from 'react';
 
@@ -71,7 +73,7 @@ export default function Component() {
                     setPageSize(v ? v : "");
                     setIsSearching(false);
                 }} />
-                <Button style={{ verticalAlign: 'bottom' }} onClick={onSearch} disabled={isSearching}><Search /></Button>
+                <Button style={{ verticalAlign: 'bottom' }} onClick={onSearch} disabled={isSearching || pageSize === ""}><Search /></Button>
             </div>
             <div>
                 {(data.length > 0) && <div style={{ marginLeft: 'auto', marginRight: 'auto', width: 200 }}>
@@ -80,7 +82,9 @@ export default function Component() {
                     <Button style={{ verticalAlign: 'bottom' }} onClick={onNext} disabled={isSearching || !hasNext}><SkipNext /></Button>
                 </div>}
 
-                <Table>
+                <Table sx={{
+                    [`& .${tableCellClasses.root}`]: { borderBottom: "none" }
+                }}>
                     <TableHead>
                         <TableRow>
                             <TableCell style={headerStyle} width="130">Posted</TableCell>
