@@ -1,0 +1,11 @@
+table {
+    border: none;
+}
+
+tr:nth-child(even) {
+    background-color: ivory;
+}
+
+tr td:nth-child(even) {
+    background-color: ivory;
+}

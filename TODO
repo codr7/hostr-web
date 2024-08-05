@@ -1,7 +1,14 @@
-* add Calendar screen
-** copy events
-** remove paging
+* add interval selection in Calendar screen
+** days/hours/minutes
+** hook into state
 
+* fix header formatting in Calendar
+** switch on interval
+
+* set initial focus in login/events
+
+* add scroll view around table in events/calendar
+  
 ---
 
 * fix nav link styling
@@ -28,3 +35,24 @@ npm run build
                 <IconButton edge="start" onClick={() => navigate('/events')}>
                     <House />
                 </IconButton>
+
+
+            {data && <Table sx={{ [`& .${tableCellClasses.root}`]: { borderBottom: "none" } }}>
+                <TableHead>
+                    <TableRow>
+                        <TableCell style={headerStyle}>Pool</TableCell>
+                        {data.intervals.map((it) => (<TableCell style={headerStyle}>
+                            {formatDateTime(new Date(it.startsAt))}
+                        </TableCell>))}
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {data.pools.map((p) => (<TableRow>
+                        <TableCell style={dataStyle}>{p.poolName}</TableCell>
+                        {p.calendar.map(it => (<TableCell style={dataStyle}>
+                            {parseInt(it.total) - parseInt(it.used)}
+                        </TableCell>))}
+                    </TableRow>)
+                    )}
+                </TableBody>
+            </Table>}

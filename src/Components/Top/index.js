@@ -1,5 +1,5 @@
 import { AppBar, IconButton, Toolbar } from '@mui/material';
-import { House, Menu } from '@mui/icons-material';
+import { Menu } from '@mui/icons-material';
 import { NavLink } from 'react-router-dom';
 
 function NL({ path, icon, caption }) {
@@ -20,8 +20,9 @@ export default function Component() {
                     <Menu />
                 </IconButton>
 
-                <NL path="/home" icon={House} caption="Home" />
-                <NL path="/events" icon={House} caption="Events" />
+                <NL path="/home" caption="Home" />
+                <NL path="/events" caption="Events" />
+                <NL path="/calendar" caption="Calendar" />
             </Toolbar>
         </AppBar>
     );
