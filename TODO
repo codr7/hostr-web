@@ -1,5 +1,11 @@
 * right align calendar data cells
-* 
+** set fixed width
+
+* handle infinite quantity in calendar 
+** add select: show free/used 
+** skip infinite if free
+** negate value if used
+
 * add interval selection in Calendar screen
 ** days/hours/minutes
 ** hook into state
