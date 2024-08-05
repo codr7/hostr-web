@@ -1,3 +1,5 @@
+* right align calendar data cells
+* 
 * add interval selection in Calendar screen
 ** days/hours/minutes
 ** hook into state

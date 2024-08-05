@@ -5,6 +5,7 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { Search } from '@mui/icons-material';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { useContext, useState } from 'react';
+import dayjs from 'dayjs';
 
 export default function Component() {
     useAuth();
@@ -15,8 +16,8 @@ export default function Component() {
 
     const [data, setData] = useState(null);
     const [isSearching, setIsSearching] = useState(false);
-    const [startAt, setStartAt] = useState(/*d*/);
-    const [endAt, setEndAt] = useState(/*new Date(d.getTime() + iv * 60 * 1000)*/);
+    const [startAt, setStartAt] = useState(dayjs(d));
+    const [endAt, setEndAt] = useState(dayjs(new Date(d.getTime() + iv * 60 * 1000)));
     const [interval, setInterval] = useState(iv);
 
     const headerStyle = {
