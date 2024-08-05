@@ -3,6 +3,7 @@ import { AppConfig, AppContext, formatDateTime, useAuth } from '../../app.js';
 import { Button, Stack, Table, TableBody, TableHead, TableRow, TextField } from '@mui/material';
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { Search, SkipNext, SkipPrevious } from '@mui/icons-material';
+import { DateTimePicker } from '@mui/x-date-pickers';
 import { useContext, useState } from 'react';
 
 export default function Component() {
@@ -12,6 +13,7 @@ export default function Component() {
     const [pageSize, setPageSize] = useState(20);
     const [data, setData] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
+    const [postedAfter, setPostedAfter] = useState();
     const [hasPrev, setHasPrev] = useState();
     const [hasNext, setHasNext] = useState();
 
@@ -36,8 +38,11 @@ export default function Component() {
         setResultEnd(pageSize * (pageIndex + 1));
 
         try {
+            var q = `${AppConfig.apiPath}/events?rowOffset=${pageIndex * pageSize}&rowLimit=${pageSize}`;
+            if (postedAfter) { q = q + `&postedAfter=${postedAfter.toJSON()}`; }
+
             const d = await (
-                await fetch(`${AppConfig.apiPath}/events?rowOffset=${pageIndex * pageSize}&rowLimit=${pageSize}`,
+                await fetch(q,
                     { mode: 'cors', headers: { 'Accept': 'application/json', Authorization: `Bearer ${appCx.jwtToken}` } })
             ).json();
 
@@ -70,17 +75,20 @@ export default function Component() {
     return (
         <Stack>
             <div style={{ marginLeft: 20, marginTop: 20 }}>
-                <TextField style={{ width: 100 }} label="Page size" value={pageSize} onChange={(e) => {
+                <DateTimePicker label='Posted after' value={postedAfter} onChange={setPostedAfter} />
+
+                <TextField style={{ width: 100, marginLeft: 10 }} inputProps={{ style: { textAlign: 'right' } }} label='Page size' value={pageSize} onChange={(e) => {
                     const v = parseInt(e.target.value);
                     setPageSize(v ? v : "");
                     setIsSearching(false);
                 }} />
-                <Button variant="outlined" style={{ verticalAlign: 'bottom', marginLeft: 10}} startIcon={<Search />} onClick={onSearch} disabled={isSearching || pageSize === ""}>Search</Button>
+
+                <Button variant='outlined' style={{ verticalAlign: 'bottom', marginLeft: 10 }} startIcon={<Search />} onClick={onSearch} disabled={isSearching || pageSize === ""}>Search</Button>
             </div>
             <div>
                 {(data.length > 0) && <div style={{ marginLeft: 'auto', marginRight: 'auto', width: 300 }}>
                     <Button style={{ verticalAlign: 'bottom' }} onClick={onPrev} disabled={isSearching || !hasPrev}><SkipPrevious /></Button>
-                    <span>page {pageIndex + 1} | record {resultStart} to {resultEnd}</span>
+                    <span>page {pageIndex + 1} | record {resultStart + 1} to {resultEnd}</span>
                     <Button style={{ verticalAlign: 'bottom' }} onClick={onNext} disabled={isSearching || !hasNext}><SkipNext /></Button>
                 </div>}
 
@@ -91,9 +99,9 @@ export default function Component() {
                         <TableRow>
                             <TableCell style={headerStyle}>Id</TableCell>
                             <TableCell style={headerStyle}>Parent</TableCell>
-                            <TableCell style={headerStyle} width="130">Posted</TableCell>
+                            <TableCell style={headerStyle} width='130'>Posted</TableCell>
                             <TableCell style={headerStyle}>Type</TableCell>
-                            <TableCell style={headerStyle} width="200">Key</TableCell>
+                            <TableCell style={headerStyle} width='200'>Key</TableCell>
                             <TableCell style={headerStyle}>Data</TableCell>
                         </TableRow>
                     </TableHead>

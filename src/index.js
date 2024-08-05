@@ -14,6 +14,10 @@ import Events from './Components/Events';
 import Home from './Components/Home';
 import Login from './Components/Login';
 import Root from './Components/Root';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+
+import 'dayjs/locale/sv';
 
 const router = createBrowserRouter([
   {
@@ -36,15 +40,17 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login />,
-      }    
+      }
     ]
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <ThemeProvider theme={defaultTheme}>
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='sv'>
+      <ThemeProvider theme={defaultTheme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </LocalizationProvider>
   </React.StrictMode>
 );

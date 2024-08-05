@@ -28,7 +28,7 @@ export default function Component(  ) {
         <Dialog open={true}>
             <DialogContent>
                 <FormControl>
-                    <Stack spacing={2} sx={{mt: 3}}>
+                    <Stack spacing={2}>
                         <TextField label="Email" onChange={(e) => setEmail(e.target.value)} autoFocus />
                         <TextField label="Password" type="password" onChange={(e) => setPassword(e.target.value)} />
                     </Stack>
