@@ -1,11 +1,15 @@
-* show 10 last events in static grid on home screen
-** click on label to go to events screen
+* add posted after field to events screen
+** use calendar component
+
+* add Calendar screen
+
+* add Pools
+* add Units
+* extract common parts
 
 * add Availability
 ** copy events
 ** remove paging
-
-* add Pools
 
 ---
 

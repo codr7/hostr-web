@@ -75,7 +75,7 @@ export default function Component() {
                     setPageSize(v ? v : "");
                     setIsSearching(false);
                 }} />
-                <Button style={{ verticalAlign: 'bottom' }} onClick={onSearch} disabled={isSearching || pageSize === ""}><Search /></Button>
+                <Button variant="outlined" style={{ verticalAlign: 'bottom', marginLeft: 10}} startIcon={<Search />} onClick={onSearch} disabled={isSearching || pageSize === ""}>Search</Button>
             </div>
             <div>
                 {(data.length > 0) && <div style={{ marginLeft: 'auto', marginRight: 'auto', width: 300 }}>
@@ -90,7 +90,7 @@ export default function Component() {
                     <TableHead>
                         <TableRow>
                             <TableCell style={headerStyle}>Id</TableCell>
-                            <TableCell style={headerStyle}>Parent id</TableCell>
+                            <TableCell style={headerStyle}>Parent</TableCell>
                             <TableCell style={headerStyle} width="130">Posted</TableCell>
                             <TableCell style={headerStyle}>Type</TableCell>
                             <TableCell style={headerStyle} width="200">Key</TableCell>

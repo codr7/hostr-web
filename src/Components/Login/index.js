@@ -35,7 +35,7 @@ export default function Component(  ) {
                 </FormControl>
             </DialogContent>
             <DialogActions>
-                <Button startIcon={<Login />} onClick={onLogin}>
+                <Button variant="outlined" startIcon={<Login />} onClick={onLogin}>
                     Login
                 </Button>
             </DialogActions>
