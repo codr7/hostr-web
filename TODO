@@ -1,13 +1,4 @@
-* add posted after field to events screen
-** use calendar component
-
 * add Calendar screen
-
-* add Pools
-* add Units
-* extract common parts
-
-* add Availability
 ** copy events
 ** remove paging
 

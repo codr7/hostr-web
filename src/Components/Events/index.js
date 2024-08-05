@@ -74,17 +74,17 @@ export default function Component() {
 
     return (
         <Stack>
-            <div style={{ marginLeft: 20, marginTop: 20 }}>
+            <Stack direction='row' spacing={2} style={{ marginLeft: 20, marginTop: 20 }}>
                 <DateTimePicker label='Posted after' value={postedAfter} onChange={setPostedAfter} />
 
-                <TextField style={{ width: 100, marginLeft: 10 }} inputProps={{ style: { textAlign: 'right' } }} label='Page size' value={pageSize} onChange={(e) => {
+                <TextField style={{ width: 100 }} inputProps={{ style: { textAlign: 'right' } }} label='Page size' value={pageSize} onChange={(e) => {
                     const v = parseInt(e.target.value);
                     setPageSize(v ? v : "");
                     setIsSearching(false);
                 }} />
 
-                <Button variant='outlined' style={{ verticalAlign: 'bottom', marginLeft: 10 }} startIcon={<Search />} onClick={onSearch} disabled={isSearching || pageSize === ""}>Search</Button>
-            </div>
+                <Button variant='outlined' style={{ verticalAlign: 'bottom' }} startIcon={<Search />} onClick={onSearch} disabled={isSearching || pageSize === ""}>Search</Button>
+            </Stack>
             <div>
                 {(data.length > 0) && <div style={{ marginLeft: 'auto', marginRight: 'auto', width: 300 }}>
                     <Button style={{ verticalAlign: 'bottom' }} onClick={onPrev} disabled={isSearching || !hasPrev}><SkipPrevious /></Button>
