@@ -1,10 +1,10 @@
 import './style.css';
 import { AppConfig, AppContext, formatDateTime, useAuth } from '../../app.js';
-import { Button, Stack, Table, TableBody, TableHead, TableRow } from '@mui/material';
+import { Button, Stack, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material';
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { Search } from '@mui/icons-material';
 import { DateTimePicker } from '@mui/x-date-pickers';
-import { useContext, useState } from 'react';
+import { useContext, useState, } from 'react';
 import dayjs from 'dayjs';
 
 export default function Component() {
@@ -23,11 +23,13 @@ export default function Component() {
     const headerStyle = {
         fontSize: '110%',
         textTransform: 'uppercase',
-        color: 'silver'
+        color: 'silver',
     };
 
     const dataStyle = {
-        fontSize: '100%'
+        fontSize: '100%',
+        maxWidth: 50,
+        textAlign: 'right'
     };
 
     const { appCx } = useContext(AppContext);
@@ -58,7 +60,7 @@ export default function Component() {
                 <DateTimePicker label='End at' value={endAt} onChange={setEndAt} />
                 <Button variant='outlined' style={{ verticalAlign: 'bottom' }} startIcon={<Search />} onClick={onSearch} disabled={isSearching || interval === ""}>Search</Button>
             </Stack>
-            {data && <Table sx={{ [`& .${tableCellClasses.root}`]: { borderBottom: "none" } }}>
+            {data && <TableContainer><Table sx={{ [`& .${tableCellClasses.root}`]: { borderBottom: "none" } }}>
                 <TableHead>
                     <TableRow>
                         <TableCell style={headerStyle}>Pool</TableCell>
@@ -68,15 +70,15 @@ export default function Component() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data.pools.map((p) => (<TableRow>
-                        <TableCell style={dataStyle}>{p.poolName}</TableCell>
-                        {p.calendar.map(it => (<TableCell style={dataStyle}>
-                            {parseInt(it.total) - parseInt(it.used)}
+                    {data.calendars.filter(cal => !cal.pool.hasInfiniteCapacity).map(cal => (<TableRow>
+                        <TableCell>{cal.pool.name}</TableCell>
+                        {cal.capacity.map(cap => (<TableCell style={dataStyle}>
+                            {parseInt(cap.total) - parseInt(cap.used)}
                         </TableCell>))}
                     </TableRow>)
                     )}
                 </TableBody>
-            </Table>}
+            </Table></TableContainer>}
         </Stack>
     );
 }
