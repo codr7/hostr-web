@@ -1,6 +1,6 @@
 import './style.css';
 import { AppConfig, AppContext, formatDay, formatTime, useAuth } from '../../app.js';
-import { Button, MenuItem, Stack, Table, TableBody, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
+import { Button, MenuItem, InputAdornment, Stack, Table, TableBody, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { Search } from '@mui/icons-material';
 import { DateTimePicker } from '@mui/x-date-pickers';
@@ -12,7 +12,7 @@ export default function Component() {
 
     const now = new Date();
     var startDate = new Date(now.getUTCFullYear(), now.getMonth(), now.getDate());
-    var endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+    var endDate = new Date(startDate.getTime() + 7 * 24 * 60 * 60 * 1000);
 
     const [data, setData] = useState(null);
     const [isSearching, setIsSearching] = useState(false);
@@ -79,7 +79,7 @@ export default function Component() {
     }
 
     const getCellStyle = (poolId, startsAt) => {
-        const s = { ...dataStyle };
+        const s = { ...dataStyle, width: 70, minWidth: 70, maxWidth: 70 };
 
         if (poolId === selPoolId) {
             if ((selEndAt == null && startsAt.getTime() === selStartAt.getTime()) ||
@@ -112,8 +112,15 @@ export default function Component() {
                 <TextField
                     value={poolName}
                     label='Pool name'
-                    onChange={e => setPoolName(e.target.value)}>
-                </TextField>
+                    onChange={e => setPoolName(e.target.value)}
+                    InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <Search />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
                 <DateTimePicker label='Start at' value={startAt} onChange={setStartAt} />
                 <DateTimePicker label='End at' value={endAt} onChange={setEndAt} />
                 <TextField
@@ -126,7 +133,7 @@ export default function Component() {
                 </TextField>
                 <Button variant='outlined' style={{ verticalAlign: 'bottom' }} startIcon={<Search />} onClick={onSearch} disabled={isSearching || interval === ""}>Search</Button>
             </Stack>
-            {data && <TableContainer><Table sx={{ [`& .${tableCellClasses.root}`]: { borderBottom: "none" } }}>
+            {data && <TableContainer><Table sx={{ [`& .${tableCellClasses.root}`]: { borderBottom: "none",  } }}>
                 <TableHead>
                     <TableRow>
                         <TableCell style={headerStyle}>Pool</TableCell>
@@ -135,12 +142,13 @@ export default function Component() {
                 </TableHead>
                 <TableBody>
                     {data.calendars.filter(cal => !cal.pool.hasInfiniteCapacity).map(cal => (<TableRow>
-                        <TableCell style={{minWidth: 100}}>{cal.pool.name}</TableCell>
+                        <TableCell style={{minWidth: 100, maxWidth: 100, width: 100}}>{cal.pool.name}</TableCell>
                         {cal.capacity.map(cap => (
                             <TableCell style={getCellStyle(cal.pool.id, new Date(cap.interval))}
                                 onClick={() => onClickCell(cal.pool.id, cap.interval)}>
                                 {parseInt(cap.total) - parseInt(cap.used)}
                             </TableCell>))}
+                        <TableCell/>
                     </TableRow>)
                     )}
                 </TableBody>
