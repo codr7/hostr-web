@@ -1,11 +1,14 @@
 * add super day header if > 1 day & interval=hours
 
-* add pool name search field
-** use begins with
-
 * set initial focus in login/events
 
 * add search button keyboard short cuts
+
+* add buttons to update capacity in calendar
+** Qty/Adjust/Book
+
+* add bookings grid that's visible when there are bookings
+** send request on cell select
 
 * add Arrivals screen
 * add Departures screen

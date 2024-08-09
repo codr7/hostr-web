@@ -20,6 +20,7 @@ export default function Component() {
     const [endAt, setEndAt] = useState(dayjs(endDate));
     const [interval, setInterval] = useState(24 * 60);
     const [searchInterval, setSearchInterval] = useState(24 * 60);
+    const [poolName, setPoolName] = useState('');
     const [selPoolId, setSelPoolId] = useState(null);
     const [selStartAt, setSelStartAt] = useState(null);
     const [selEndAt, setSelEndAt] = useState(null);
@@ -43,7 +44,7 @@ export default function Component() {
         setIsSearching(true);
 
         try {
-            var q = `${AppConfig.apiPath}/calendars?startAt=${startAt.toJSON()}&endAt=${endAt.toJSON()}&interval=${interval}`
+            var q = `${AppConfig.apiPath}/calendars?poolName=${encodeURIComponent(poolName + '%')}&startAt=${startAt.toJSON()}&endAt=${endAt.toJSON()}&interval=${interval}`
 
             const d = await (
                 await fetch(q,
@@ -81,7 +82,7 @@ export default function Component() {
         const s = { ...dataStyle };
 
         if (poolId === selPoolId) {
-            if ((selEndAt == null && startsAt.getTime() == selStartAt.getTime()) ||
+            if ((selEndAt == null && startsAt.getTime() === selStartAt.getTime()) ||
                 ((selEndAt != null) && startsAt.getTime() >= selStartAt.getTime() && startsAt.getTime() <= selEndAt.getTime())) {
                 s.backgroundColor = '#89CFF0';
             }
@@ -108,6 +109,11 @@ export default function Component() {
     return (
         <Stack>
             <Stack direction='row' spacing={2} style={{ marginLeft: 20, marginTop: 20 }}>
+                <TextField
+                    value={poolName}
+                    label='Pool name'
+                    onChange={e => setPoolName(e.target.value)}>
+                </TextField>
                 <DateTimePicker label='Start at' value={startAt} onChange={setStartAt} />
                 <DateTimePicker label='End at' value={endAt} onChange={setEndAt} />
                 <TextField
@@ -129,10 +135,10 @@ export default function Component() {
                 </TableHead>
                 <TableBody>
                     {data.calendars.filter(cal => !cal.pool.hasInfiniteCapacity).map(cal => (<TableRow>
-                        <TableCell>{cal.pool.name}</TableCell>
+                        <TableCell style={{minWidth: 100}}>{cal.pool.name}</TableCell>
                         {cal.capacity.map(cap => (
-                            <TableCell style={getCellStyle(cal.pool.id, new Date(cap.interval))} 
-                                       onClick={() => onClickCell(cal.pool.id, cap.interval)}>
+                            <TableCell style={getCellStyle(cal.pool.id, new Date(cap.interval))}
+                                onClick={() => onClickCell(cal.pool.id, cap.interval)}>
                                 {parseInt(cap.total) - parseInt(cap.used)}
                             </TableCell>))}
                     </TableRow>)
