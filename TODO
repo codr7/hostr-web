@@ -1,3 +1,5 @@
+* add super day header if > 1 day & interval=hours
+
 * add pool name search field
 ** use begins with
 

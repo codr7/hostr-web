@@ -20,6 +20,10 @@ export default function Component() {
     const [endAt, setEndAt] = useState(dayjs(endDate));
     const [interval, setInterval] = useState(24 * 60);
     const [searchInterval, setSearchInterval] = useState(24 * 60);
+    const [selPoolId, setSelPoolId] = useState(null);
+    const [selStartAt, setSelStartAt] = useState(null);
+    const [selEndAt, setSelEndAt] = useState(null);
+
 
     const headerStyle = {
         fontSize: '110%',
@@ -48,6 +52,9 @@ export default function Component() {
 
             setData(d);
             setSearchInterval(interval);
+            setSelPoolId(null);
+            setSelStartAt(null);
+            setSelEndAt(null);
         } finally {
             setIsSearching(false);
         }
@@ -68,6 +75,29 @@ export default function Component() {
         }
 
         return result;
+    }
+
+    const getCellStyle = (poolId, startsAt) => {
+        const s = { ...dataStyle };
+
+        if (poolId === selPoolId) {
+            if ((selEndAt == null && startsAt.getTime() == selStartAt.getTime()) ||
+                ((selEndAt != null) && startsAt.getTime() >= selStartAt.getTime() && startsAt.getTime() <= selEndAt.getTime())) {
+                s.backgroundColor = '#89CFF0';
+            }
+        }
+
+        return s;
+    }
+
+    const onClickCell = (poolId, startsAt) => {
+        if (selStartAt == null || selEndAt != null || poolId !== selPoolId) {
+            setSelStartAt(new Date(startsAt));
+            setSelPoolId(poolId);
+            setSelEndAt(null);
+        } else {
+            setSelEndAt(new Date(startsAt));
+        }
     }
 
     const onSearch = async () => await refresh();
@@ -100,7 +130,7 @@ export default function Component() {
                 <TableBody>
                     {data.calendars.filter(cal => !cal.pool.hasInfiniteCapacity).map(cal => (<TableRow>
                         <TableCell>{cal.pool.name}</TableCell>
-                        {cal.capacity.map(cap => (<TableCell style={dataStyle}>{parseInt(cap.total) - parseInt(cap.used)}</TableCell>))}
+                        {cal.capacity.map(cap => (<TableCell style={getCellStyle(cal.pool.id, new Date(cap.startsAt))} onClick={() => onClickCell(cal.pool.id, cap.startsAt)}>{parseInt(cap.total) - parseInt(cap.used)}</TableCell>))}
                     </TableRow>)
                     )}
                 </TableBody>
