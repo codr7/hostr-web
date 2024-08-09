@@ -130,7 +130,11 @@ export default function Component() {
                 <TableBody>
                     {data.calendars.filter(cal => !cal.pool.hasInfiniteCapacity).map(cal => (<TableRow>
                         <TableCell>{cal.pool.name}</TableCell>
-                        {cal.capacity.map(cap => (<TableCell style={getCellStyle(cal.pool.id, new Date(cap.startsAt))} onClick={() => onClickCell(cal.pool.id, cap.startsAt)}>{parseInt(cap.total) - parseInt(cap.used)}</TableCell>))}
+                        {cal.capacity.map(cap => (
+                            <TableCell style={getCellStyle(cal.pool.id, new Date(cap.interval))} 
+                                       onClick={() => onClickCell(cal.pool.id, cap.interval)}>
+                                {parseInt(cap.total) - parseInt(cap.used)}
+                            </TableCell>))}
                     </TableRow>)
                     )}
                 </TableBody>
