@@ -1,14 +1,6 @@
 * add pool name search field
 ** use begins with
 
-* add interval selection in Calendar screen
-** days/hours/minutes
-** hook into state
-** update headers
-
-* fix header formatting in Calendar
-** switch on interval
-
 * set initial focus in login/events
 
 * add search button keyboard short cuts
