@@ -1,10 +1,10 @@
 import './style.css';
 import { AppConfig, AppContext, formatDateShort, formatDay, formatTime, today, truncDate, useAuth } from '../../app.js';
-import { Button, MenuItem, InputAdornment, Stack, Table, TableBody, TableContainer, TableHead, TableRow, TextField, Tooltip } from '@mui/material';
+import { Button, MenuItem, InputAdornment, Stack, Table, TableBody, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { Check, Search } from '@mui/icons-material';
 import { DateTimePicker } from '@mui/x-date-pickers';
-import { useCallback, useContext, useEffect, useState, } from 'react';
+import { useContext, useState, } from 'react';
 import dayjs from 'dayjs';
 
 export default function Component() {
@@ -106,7 +106,7 @@ export default function Component() {
     const onDrillTime = async (target) => {
         let result;
 
-        switch (interval) {
+        switch (searchInterval) {
             case WEEKS:
                 result = DAYS;
                 break;
@@ -137,17 +137,6 @@ export default function Component() {
     const DAYS = 24 * HOURS;
     const WEEKS = DAYS * 7;
 
-    const handleKeyPress = useCallback(async (event) => {
-        if (event.key === 'q' && event.altKey) {
-            await onSearch();
-        }
-    }, []);
-
-    useEffect(() => {
-        document.addEventListener('keydown', handleKeyPress);
-        return () => document.removeEventListener('keydown', handleKeyPress);
-    }, [handleKeyPress]);
-
     return (
         <Stack>
             <Stack direction='row' spacing={2} style={{ marginLeft: 20, marginTop: 20 }}>
@@ -176,11 +165,9 @@ export default function Component() {
                     <MenuItem value={HOURS}>Hours</MenuItem>
                 </TextField>
 
-                <Tooltip title='Alt Q' arrow>
-                    <Button variant='outlined' startIcon={<Check />} onClick={onSearch} disabled={isSearching}>
-                        Show
-                    </Button>
-                </Tooltip>
+                <Button variant='outlined' startIcon={<Check />} onClick={onSearch} disabled={isSearching}>
+                    Show
+                </Button>
             </Stack>
             {data && <TableContainer><Table sx={{ [`& .${tableCellClasses.root}`]: { borderBottom: "none", } }}>
                 <TableHead>
@@ -190,7 +177,7 @@ export default function Component() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data.calendars.filter(cal => !cal.pool.hasInfiniteCapacity).map(cal => (<TableRow>
+                    {data.calendars.map(cal => (<TableRow>
                         <TableCell style={{ minWidth: 100, maxWidth: 100, width: 100, cursor: 'pointer' }}
                             onDoubleClick={() => onDrillPool(cal.pool.name)}>{cal.pool.name}</TableCell>
                         {cal.capacity.map(cap => (

@@ -1,10 +1,10 @@
 import './style.css';
 import { AppConfig, AppContext, formatDateTime, useAuth } from '../../app.js';
-import { Button, Stack, Table, TableBody, TableHead, TableRow, TextField, Tooltip } from '@mui/material';
+import { Button, Stack, Table, TableBody, TableHead, TableRow, TextField } from '@mui/material';
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { Check, SkipNext, SkipPrevious } from '@mui/icons-material';
 import { DateTimePicker } from '@mui/x-date-pickers';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 
 export default function Component() {
     useAuth();
@@ -72,17 +72,6 @@ export default function Component() {
         setHasPrev(i > 0);
     };
 
-    const handleKeyPress = useCallback(async (event) => {
-        if (event.key === 'q' && event.altKey) {
-            await onSearch();
-        }
-    }, []);
-
-    useEffect(() => {
-        document.addEventListener('keydown', handleKeyPress);
-        return () => document.removeEventListener('keydown', handleKeyPress);
-    }, [handleKeyPress]);
-
     return (
         <Stack>
             <Stack direction='row' spacing={2} style={{ marginLeft: 20, marginTop: 20 }}>
@@ -94,11 +83,9 @@ export default function Component() {
                     setIsSearching(false);
                 }} />
 
-                <Tooltip title='Alt Q' arrow>
-                    <Button variant='outlined' startIcon={<Check />} onClick={onSearch} disabled={isSearching || pageSize === ""}>
-                        Show
-                    </Button>
-                </Tooltip>
+                <Button variant='outlined' startIcon={<Check />} onClick={onSearch} disabled={isSearching || pageSize === ""}>
+                    Show
+                </Button>
             </Stack>
             <div>
                 {(data.length > 0) && <div style={{ marginLeft: 'auto', marginRight: 'auto', width: 300 }}>

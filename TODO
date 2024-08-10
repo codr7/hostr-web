@@ -1,7 +1,7 @@
 * add super day header if > 1 day & interval=hours
  
 * add buttons to update capacity in calendar
-** Quantity field & Adjust/Book buttons
+** Quantity field & Book button
 
 * add Ledger screen 
 * add Arrivals screen
