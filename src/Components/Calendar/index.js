@@ -138,7 +138,7 @@ export default function Component() {
     const WEEKS = DAYS * 7;
 
     const handleKeyPress = useCallback(async (event) => {
-        if (event.key === 's' && event.altKey) {
+        if (event.key === 'q' && event.altKey) {
             await onSearch();
         }
     }, []);
@@ -176,7 +176,7 @@ export default function Component() {
                     <MenuItem value={HOURS}>Hours</MenuItem>
                 </TextField>
 
-                <Tooltip title='Alt S' arrow>
+                <Tooltip title='Alt Q' arrow>
                     <Button variant='outlined' startIcon={<Check />} onClick={onSearch} disabled={isSearching}>
                         Show
                     </Button>
