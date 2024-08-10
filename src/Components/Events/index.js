@@ -1,6 +1,6 @@
 import './style.css';
 import { AppConfig, AppContext, formatDateTime, useAuth } from '../../app.js';
-import { Button, Stack, Table, TableBody, TableHead, TableRow, TextField } from '@mui/material';
+import { Button, Stack, Table, TableBody, TableHead, TableRow, TextField, Tooltip } from '@mui/material';
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { Check, SkipNext, SkipPrevious } from '@mui/icons-material';
 import { DateTimePicker } from '@mui/x-date-pickers';
@@ -94,12 +94,11 @@ export default function Component() {
                     setIsSearching(false);
                 }} />
 
-                <Stack>
-                    <Button title='alt+q' variant='outlined' style={{ padding: 15 }} startIcon={<Check />} onClick={onSearch} disabled={isSearching || pageSize === ""}>
+                <Tooltip title='Alt S'>
+                    <Button variant='outlined' startIcon={<Check />} onClick={onSearch} disabled={isSearching || pageSize === ""}>
                         Show
                     </Button>
-                    <span style={{ fontSize: '14px', color: 'silver', textAlign: 'right', marginRight: 4, marginTop: -18 }}>alt+s</span>
-                </Stack>
+                </Tooltip>
             </Stack>
             <div>
                 {(data.length > 0) && <div style={{ marginLeft: 'auto', marginRight: 'auto', width: 300 }}>

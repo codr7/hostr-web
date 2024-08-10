@@ -3,9 +3,6 @@
 * add buttons to update capacity in calendar
 ** Quantity field & Adjust/Book buttons
 
-* extract ShortcutButton component
-** use in Events/Calendar
-
 * add Ledger screen 
 * add Arrivals screen
 * add Departures screen

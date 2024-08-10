@@ -1,6 +1,6 @@
 import './style.css';
 import { AppConfig, AppContext, formatDateShort, formatDay, formatTime, today, truncDate, useAuth } from '../../app.js';
-import { Button, MenuItem, InputAdornment, Stack, Table, TableBody, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
+import { Button, MenuItem, InputAdornment, Stack, Table, TableBody, TableContainer, TableHead, TableRow, TextField, Tooltip } from '@mui/material';
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { Check, Search } from '@mui/icons-material';
 import { DateTimePicker } from '@mui/x-date-pickers';
@@ -176,10 +176,11 @@ export default function Component() {
                     <MenuItem value={HOURS}>Hours</MenuItem>
                 </TextField>
 
-                <Stack>
-                    <Button variant='outlined' style={{ padding: 15 }} startIcon={<Check />} onClick={onSearch} disabled={isSearching || interval === ""}>Show</Button>
-                    <span style={{ fontSize: '14px', color: 'silver', textAlign: 'right', marginRight: 4, marginTop: -18 }}>alt+s</span>
-                </Stack>
+                <Tooltip title='Alt S' arrow>
+                    <Button variant='outlined' startIcon={<Check />} onClick={onSearch} disabled={isSearching}>
+                        Show
+                    </Button>
+                </Tooltip>
             </Stack>
             {data && <TableContainer><Table sx={{ [`& .${tableCellClasses.root}`]: { borderBottom: "none", } }}>
                 <TableHead>
