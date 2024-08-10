@@ -7,7 +7,8 @@ export const AppConfig = {apiPath: 'http://localhost:5000/api/v1'}
 
 export const AppContext = React.createContext();
 
-export const DateFormat = 'YY-MM-DD';
+export const ShortDateFormat = 'DD/MM';
+export const LongDateFormat = 'YY-MM-DD';
 export const DayFormat = 'dd DD';
 
 export const TimeFormat = 'HH:mm';
@@ -20,8 +21,16 @@ export const formatTime = (value) => {
     return dayjs(value).format(TimeFormat);
 };
 
+export const formatDateShort = (value) => {
+    return dayjs(value).format(ShortDateFormat);
+};
+
+export const formatDateLong = (value) => {
+    return dayjs(value).format(LongDateFormat);
+};
+
 export const formatDateTime = (value) => {
-    return dayjs(value).format(`${DateFormat} ${TimeFormat}`);
+    return dayjs(value).format(`${LongDateFormat} ${TimeFormat}`);
 };
 
 export const useAuth = () => {

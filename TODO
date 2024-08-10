@@ -1,5 +1,9 @@
+* change pointer when hovering cells
+
 * add super day header if > 1 day & interval=hours
 
+* drill down into days/hours on cell double click
+* 
 * set initial focus in login/events
 
 * add search button keyboard short cuts
@@ -7,9 +11,7 @@
 * add buttons to update capacity in calendar
 ** Qty/Adjust/Book
 
-* add bookings grid that's visible when there are bookings
-** send request on cell select
-
+* add Ledger screen 
 * add Arrivals screen
 * add Departures screen
 

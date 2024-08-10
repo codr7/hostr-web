@@ -1,8 +1,8 @@
 import './style.css';
-import { AppConfig, AppContext, formatDay, formatTime, useAuth } from '../../app.js';
+import { AppConfig, AppContext, formatDateShort, formatDay, formatTime, useAuth } from '../../app.js';
 import { Button, MenuItem, InputAdornment, Stack, Table, TableBody, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import { Search } from '@mui/icons-material';
+import { Check, Search } from '@mui/icons-material';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { useContext, useState, } from 'react';
 import dayjs from 'dayjs';
@@ -65,6 +65,9 @@ export default function Component() {
         let result;
 
         switch (searchInterval) {
+            case WEEKS:
+                result = formatDateShort(it);
+                break;
             case DAYS:
                 result = formatDay(it);
                 break;
@@ -103,8 +106,9 @@ export default function Component() {
 
     const onSearch = async () => await refresh();
 
-    const DAYS = 24 * 60;
     const HOURS = 60;
+    const DAYS = 24 * HOURS;
+    const WEEKS = DAYS * 7;
 
     return (
         <Stack>
@@ -128,10 +132,12 @@ export default function Component() {
                     value={interval}
                     label='Interval'
                     onChange={e => setInterval(e.target.value)}>
+                    <MenuItem value={WEEKS}>Weeks</MenuItem>
                     <MenuItem value={DAYS}>Days</MenuItem>
                     <MenuItem value={HOURS}>Hours</MenuItem>
                 </TextField>
-                <Button variant='outlined' style={{ verticalAlign: 'bottom' }} startIcon={<Search />} onClick={onSearch} disabled={isSearching || interval === ""}>Search</Button>
+
+                <Button variant='outlined' style={{ verticalAlign: 'bottom' }} startIcon={<Check />} onClick={onSearch} disabled={isSearching || interval === ""}>Show</Button>
             </Stack>
             {data && <TableContainer><Table sx={{ [`& .${tableCellClasses.root}`]: { borderBottom: "none",  } }}>
                 <TableHead>

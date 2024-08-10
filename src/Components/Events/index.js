@@ -2,7 +2,7 @@ import './style.css';
 import { AppConfig, AppContext, formatDateTime, useAuth } from '../../app.js';
 import { Button, Stack, Table, TableBody, TableHead, TableRow, TextField } from '@mui/material';
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import { Search, SkipNext, SkipPrevious } from '@mui/icons-material';
+import { Check, SkipNext, SkipPrevious } from '@mui/icons-material';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { useContext, useState } from 'react';
 
@@ -83,7 +83,7 @@ export default function Component() {
                     setIsSearching(false);
                 }} />
 
-                <Button variant='outlined' style={{ verticalAlign: 'bottom' }} startIcon={<Search />} onClick={onSearch} disabled={isSearching || pageSize === ""}>Search</Button>
+                <Button variant='outlined' style={{ verticalAlign: 'bottom' }} startIcon={<Check />} onClick={onSearch} disabled={isSearching || pageSize === ""}>Show</Button>
             </Stack>
             <div>
                 {(data.length > 0) && <div style={{ marginLeft: 'auto', marginRight: 'auto', width: 300 }}>
