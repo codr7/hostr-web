@@ -1,11 +1,10 @@
 * add super day header if > 1 day & interval=hours
  
-* set initial focus in login/events
-
-* add search button keyboard short cuts
-
 * add buttons to update capacity in calendar
-** Qty/Adjust/Book
+** Quantity field & Adjust/Book buttons
+
+* extract ShortcutButton component
+** use in Events/Calendar
 
 * add Ledger screen 
 * add Arrivals screen

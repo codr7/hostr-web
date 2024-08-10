@@ -4,7 +4,7 @@ import { Button, MenuItem, InputAdornment, Stack, Table, TableBody, TableContain
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { Check, Search } from '@mui/icons-material';
 import { DateTimePicker } from '@mui/x-date-pickers';
-import { useContext, useState, } from 'react';
+import { useCallback, useContext, useEffect, useState, } from 'react';
 import dayjs from 'dayjs';
 
 export default function Component() {
@@ -81,7 +81,7 @@ export default function Component() {
     };
 
     const getCellStyle = (poolId, startsAt) => {
-        const s = { ...dataStyle, width: 70, minWidth: 70, maxWidth: 70, cursor:'pointer' };
+        const s = { ...dataStyle, width: 70, minWidth: 70, maxWidth: 70, cursor: 'pointer' };
 
         if (poolId === selPoolId) {
             if ((selEndAt == null && startsAt.getTime() === selStartAt.getTime()) ||
@@ -137,21 +137,33 @@ export default function Component() {
     const DAYS = 24 * HOURS;
     const WEEKS = DAYS * 7;
 
+    const handleKeyPress = useCallback(async (event) => {
+        if (event.key === 's' && event.altKey) {
+            await onSearch();
+        }
+    }, []);
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyPress);
+        return () => document.removeEventListener('keydown', handleKeyPress);
+    }, [handleKeyPress]);
+
     return (
         <Stack>
             <Stack direction='row' spacing={2} style={{ marginLeft: 20, marginTop: 20 }}>
                 <TextField
+                    autoFocus
                     value={poolName}
                     label='Pool name'
                     onChange={e => setPoolName(e.target.value)}
                     InputProps={{
                         startAdornment: (
-                          <InputAdornment position="start">
-                            <Search />
-                          </InputAdornment>
+                            <InputAdornment position="start">
+                                <Search />
+                            </InputAdornment>
                         ),
-                      }}
-                    />
+                    }}
+                />
                 <DateTimePicker label='Start at' value={startAt} onChange={setStartAt} />
                 <DateTimePicker label='End at' value={endAt} onChange={setEndAt} />
                 <TextField
@@ -164,9 +176,12 @@ export default function Component() {
                     <MenuItem value={HOURS}>Hours</MenuItem>
                 </TextField>
 
-                <Button variant='outlined' style={{ verticalAlign: 'bottom' }} startIcon={<Check />} onClick={onSearch} disabled={isSearching || interval === ""}>Show</Button>
+                <Stack>
+                    <Button variant='outlined' style={{ padding: 15 }} startIcon={<Check />} onClick={onSearch} disabled={isSearching || interval === ""}>Show</Button>
+                    <span style={{ fontSize: '14px', color: 'silver', textAlign: 'right', marginRight: 4, marginTop: -18 }}>alt+s</span>
+                </Stack>
             </Stack>
-            {data && <TableContainer><Table sx={{ [`& .${tableCellClasses.root}`]: { borderBottom: "none",  } }}>
+            {data && <TableContainer><Table sx={{ [`& .${tableCellClasses.root}`]: { borderBottom: "none", } }}>
                 <TableHead>
                     <TableRow>
                         <TableCell style={headerStyle}>Pool</TableCell>
@@ -175,7 +190,7 @@ export default function Component() {
                 </TableHead>
                 <TableBody>
                     {data.calendars.filter(cal => !cal.pool.hasInfiniteCapacity).map(cal => (<TableRow>
-                        <TableCell style={{minWidth: 100, maxWidth: 100, width: 100, cursor: 'pointer'}}
+                        <TableCell style={{ minWidth: 100, maxWidth: 100, width: 100, cursor: 'pointer' }}
                             onDoubleClick={() => onDrillPool(cal.pool.name)}>{cal.pool.name}</TableCell>
                         {cal.capacity.map(cap => (
                             <TableCell style={getCellStyle(cal.pool.id, new Date(cap.interval))}
@@ -183,7 +198,7 @@ export default function Component() {
                                 onDoubleClick={() => onDrillTime(new Date(cap.interval))}>
                                 {parseInt(cap.total) - parseInt(cap.used)}
                             </TableCell>))}
-                        <TableCell/>
+                        <TableCell />
                     </TableRow>)
                     )}
                 </TableBody>

@@ -1,5 +1,5 @@
-import { Button, Dialog, DialogActions, DialogContent, Stack, TextField } from '@mui/material';
-import { Login } from '@mui/icons-material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField } from '@mui/material';
+import { Check } from '@mui/icons-material';
 import { useContext, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { AppConfig, AppContext } from '../../app.js';
@@ -28,15 +28,16 @@ export default function Component() {
 
     return (
         <Dialog open={true}>
-            <DialogContent>
+            <DialogTitle style={{marginTop: 10, textTransform: 'uppercase', color: 'silver'}}>Hostr Login</DialogTitle>
+            <DialogContent style={{paddingTop: 10}}>
                 <Stack spacing={2}>
-                    <TextField label="Email" onChange={(e) => setEmail(e.target.value)} autoFocus />
-                    <TextField label="Password" type="password" onChange={(e) => setPassword(e.target.value)} />
+                    <TextField autoFocus label='Email' onChange={(e) => setEmail(e.target.value)}/>
+                    <TextField label='Password' type='password' onChange={(e) => setPassword(e.target.value)} />
                 </Stack>
             </DialogContent>
-            <DialogActions>
-                <Button variant="outlined" startIcon={<Login />} onClick={onLogin}>
-                    Login
+            <DialogActions style={{margin: 10}}>
+                <Button variant='outlined' startIcon={<Check />} onClick={onLogin}>
+                    Ok
                 </Button>
             </DialogActions>
         </Dialog>

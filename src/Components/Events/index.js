@@ -4,7 +4,7 @@ import { Button, Stack, Table, TableBody, TableHead, TableRow, TextField } from 
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { Check, SkipNext, SkipPrevious } from '@mui/icons-material';
 import { DateTimePicker } from '@mui/x-date-pickers';
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 export default function Component() {
     useAuth();
@@ -72,10 +72,21 @@ export default function Component() {
         setHasPrev(i > 0);
     };
 
+    const handleKeyPress = useCallback(async (event) => {
+        if (event.key === 's' && event.altKey) {
+            await onSearch();
+        }
+    }, []);
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyPress);
+        return () => document.removeEventListener('keydown', handleKeyPress);
+    }, [handleKeyPress]);
+
     return (
         <Stack>
             <Stack direction='row' spacing={2} style={{ marginLeft: 20, marginTop: 20 }}>
-                <DateTimePicker label='Posted after' value={postedAfter} onChange={setPostedAfter} />
+                <DateTimePicker autoFocus label='Posted after' value={postedAfter} onChange={setPostedAfter} />
 
                 <TextField style={{ width: 100 }} inputProps={{ style: { textAlign: 'right' } }} label='Page size' value={pageSize} onChange={(e) => {
                     const v = parseInt(e.target.value);
@@ -83,7 +94,12 @@ export default function Component() {
                     setIsSearching(false);
                 }} />
 
-                <Button variant='outlined' style={{ verticalAlign: 'bottom' }} startIcon={<Check />} onClick={onSearch} disabled={isSearching || pageSize === ""}>Show</Button>
+                <Stack>
+                    <Button title='alt+q' variant='outlined' style={{ padding: 15 }} startIcon={<Check />} onClick={onSearch} disabled={isSearching || pageSize === ""}>
+                        Show
+                    </Button>
+                    <span style={{ fontSize: '14px', color: 'silver', textAlign: 'right', marginRight: 4, marginTop: -18 }}>alt+s</span>
+                </Stack>
             </Stack>
             <div>
                 {(data.length > 0) && <div style={{ marginLeft: 'auto', marginRight: 'auto', width: 300 }}>
