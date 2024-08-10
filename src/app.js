@@ -10,28 +10,29 @@ export const AppContext = React.createContext();
 export const ShortDateFormat = 'DD/MM';
 export const LongDateFormat = 'YY-MM-DD';
 export const DayFormat = 'dd DD';
-
 export const TimeFormat = 'HH:mm';
 
-export const formatDay = (value) => {
-    return dayjs(value).format(DayFormat);
-};
+export const formatDay = (value) =>
+    dayjs(value).format(DayFormat);
 
-export const formatTime = (value) => {
-    return dayjs(value).format(TimeFormat);
-};
+export const formatTime = (value) =>
+    dayjs(value).format(TimeFormat);
 
-export const formatDateShort = (value) => {
-    return dayjs(value).format(ShortDateFormat);
-};
+export const formatDateShort = (value) =>
+    dayjs(value).format(ShortDateFormat);
 
-export const formatDateLong = (value) => {
-    return dayjs(value).format(LongDateFormat);
-};
+export const formatDateLong = (value) =>
+    dayjs(value).format(LongDateFormat);
 
-export const formatDateTime = (value) => {
-    return dayjs(value).format(`${LongDateFormat} ${TimeFormat}`);
-};
+export const formatDateTime = (value) =>
+    dayjs(value).format(`${LongDateFormat} ${TimeFormat}`);
+
+export const now = () => new Date();
+
+export const today = () => truncDate(now());
+
+export const truncDate = (value) =>
+    new Date(value.getUTCFullYear(), value.getMonth(), value.getDate());
 
 export const useAuth = () => {
     const { appCx } = useContext(AppContext);

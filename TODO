@@ -1,9 +1,5 @@
-* change pointer when hovering cells
-
 * add super day header if > 1 day & interval=hours
-
-* drill down into days/hours on cell double click
-* 
+ 
 * set initial focus in login/events
 
 * add search button keyboard short cuts

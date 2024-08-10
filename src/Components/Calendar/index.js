@@ -1,5 +1,5 @@
 import './style.css';
-import { AppConfig, AppContext, formatDateShort, formatDay, formatTime, useAuth } from '../../app.js';
+import { AppConfig, AppContext, formatDateShort, formatDay, formatTime, today, truncDate, useAuth } from '../../app.js';
 import { Button, MenuItem, InputAdornment, Stack, Table, TableBody, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { Check, Search } from '@mui/icons-material';
@@ -10,8 +10,7 @@ import dayjs from 'dayjs';
 export default function Component() {
     useAuth();
 
-    const now = new Date();
-    var startDate = new Date(now.getUTCFullYear(), now.getMonth(), now.getDate());
+    var startDate = today();
     var endDate = new Date(startDate.getTime() + 7 * 24 * 60 * 60 * 1000);
 
     const [data, setData] = useState(null);
@@ -40,7 +39,7 @@ export default function Component() {
 
     const { appCx } = useContext(AppContext);
 
-    const refresh = async () => {
+    const refresh = async (poolName, startAt, endAt, interval) => {
         setIsSearching(true);
 
         try {
@@ -79,10 +78,10 @@ export default function Component() {
         }
 
         return result;
-    }
+    };
 
     const getCellStyle = (poolId, startsAt) => {
-        const s = { ...dataStyle, width: 70, minWidth: 70, maxWidth: 70 };
+        const s = { ...dataStyle, width: 70, minWidth: 70, maxWidth: 70, cursor:'pointer' };
 
         if (poolId === selPoolId) {
             if ((selEndAt == null && startsAt.getTime() === selStartAt.getTime()) ||
@@ -92,19 +91,47 @@ export default function Component() {
         }
 
         return s;
-    }
+    };
 
-    const onClickCell = (poolId, startsAt) => {
+    const onSelect = (poolId, startsAt) => {
         if (selStartAt == null || selEndAt != null || poolId !== selPoolId) {
-            setSelStartAt(new Date(startsAt));
+            setSelStartAt(startsAt);
             setSelPoolId(poolId);
             setSelEndAt(null);
         } else {
-            setSelEndAt(new Date(startsAt));
+            setSelEndAt(startsAt);
         }
-    }
+    };
 
-    const onSearch = async () => await refresh();
+    const onDrillTime = async (target) => {
+        let result;
+
+        switch (interval) {
+            case WEEKS:
+                result = DAYS;
+                break;
+            case DAYS:
+                result = HOURS;
+                break;
+            case HOURS:
+                target = truncDate(target);
+                result = WEEKS;
+                break;
+            default:
+                throw new Error(`Invalid interval: ${interval}`);
+        }
+
+        setInterval(result);
+        setStartAt(dayjs(target));
+        await refresh(poolName, target, endAt, result);
+    };
+
+    const onDrillPool = async (poolName) => {
+        setPoolName(poolName);
+        await refresh(poolName, startAt, endAt, interval);
+    };
+
+    const onSearch = async () => await refresh(poolName, startAt, endAt, interval);
 
     const HOURS = 60;
     const DAYS = 24 * HOURS;
@@ -148,10 +175,12 @@ export default function Component() {
                 </TableHead>
                 <TableBody>
                     {data.calendars.filter(cal => !cal.pool.hasInfiniteCapacity).map(cal => (<TableRow>
-                        <TableCell style={{minWidth: 100, maxWidth: 100, width: 100}}>{cal.pool.name}</TableCell>
+                        <TableCell style={{minWidth: 100, maxWidth: 100, width: 100, cursor: 'pointer'}}
+                            onDoubleClick={() => onDrillPool(cal.pool.name)}>{cal.pool.name}</TableCell>
                         {cal.capacity.map(cap => (
                             <TableCell style={getCellStyle(cal.pool.id, new Date(cap.interval))}
-                                onClick={() => onClickCell(cal.pool.id, cap.interval)}>
+                                onClick={() => onSelect(cal.pool.id, new Date(cap.interval))}
+                                onDoubleClick={() => onDrillTime(new Date(cap.interval))}>
                                 {parseInt(cap.total) - parseInt(cap.used)}
                             </TableCell>))}
                         <TableCell/>
