@@ -11,8 +11,6 @@ export default function Component() {
     const { appCx, setAppCx } = useContext(AppContext);
 
     const onLogin = async () => {
-        console.log(`${AppConfig.apiPath}/login`);
-
         var res = await (await
             fetch(`${AppConfig.apiPath}/login`,
                 {

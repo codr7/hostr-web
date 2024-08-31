@@ -1,8 +1,14 @@
+npm run build
+
+* add reqct query
+* 
 * add super day header if > 1 day & interval=hours
  
 * add buttons to update capacity in calendar
 ** Quantity field & Book button
 
+* add Cashier screen
+* 
 * add Ledger screen 
 * add Arrivals screen
 * add Departures screen
@@ -13,44 +19,3 @@
 ** highlight active
 
 * implement Top menu
-
----
-
-npm run build
-
-                <Typography
-                    variant="button"
-                    color="common.white"
-                    noWrap
-                    component="div"
-                    sx={{ display: { xs: 'none', sm: 'block' } }}>
-                    Hostr v1.0
-                </Typography>
-
-                    const location = useLocation();
-    const path = new RegExp('/(.*)$').exec(location.pathname)[1];
-
-                <IconButton edge="start" onClick={() => navigate('/events')}>
-                    <House />
-                </IconButton>
-
-
-            {data && <Table sx={{ [`& .${tableCellClasses.root}`]: { borderBottom: "none" } }}>
-                <TableHead>
-                    <TableRow>
-                        <TableCell style={headerStyle}>Pool</TableCell>
-                        {data.intervals.map((it) => (<TableCell style={headerStyle}>
-                            {formatDateTime(new Date(it.startsAt))}
-                        </TableCell>))}
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {data.pools.map((p) => (<TableRow>
-                        <TableCell style={dataStyle}>{p.poolName}</TableCell>
-                        {p.calendar.map(it => (<TableCell style={dataStyle}>
-                            {parseInt(it.total) - parseInt(it.used)}
-                        </TableCell>))}
-                    </TableRow>)
-                    )}
-                </TableBody>
-            </Table>}
